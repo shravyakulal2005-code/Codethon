@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import styles from "./Auth.module.css";
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -18,91 +19,78 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       await register(form.name, form.email, form.password);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       const detail = err.response?.data?.detail;
-      if (Array.isArray(detail)) {
-        setError(detail.map((d) => d.msg).join(" "));
-      } else {
-        setError(detail || "Registration failed. Please try again.");
-      }
+      setError(detail || "Registration failed. Try a different email.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card glass">
-        <div className="auth-logo">
-          <span className="logo-icon">🧠</span>
-          <h1 className="auth-title">StudyMind AI</h1>
-          <p className="auth-subtitle">Your intelligent study companion</p>
+    <div className={styles.authWrapper}>
+      <div className={styles.authCard}>
+        <div className={styles.brandHeader}>
+          <div className={styles.brandIcon}>🧠</div>
+          <h1 className={styles.brandTitle}>StudyMind AI</h1>
+          <p className={styles.brandSubtitle}>Create your AI study planner account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form" id="register-form">
-          <div className="form-group">
-            <label htmlFor="name">Full Name</label>
+        {error && <div className={styles.errorBanner}>{error}</div>}
+
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Full Name</label>
             <input
-              id="name"
               name="name"
               type="text"
-              placeholder="Alice Smith"
+              placeholder="Prajwal Ganiga"
               value={form.name}
               onChange={handleChange}
               required
-              minLength={2}
-              className="form-input"
+              className={styles.input}
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Email Address</label>
             <input
-              id="email"
               name="email"
               type="email"
-              placeholder="alice@university.edu"
+              placeholder="prajwal@example.com"
               value={form.email}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.input}
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Password</label>
             <input
-              id="password"
               name="password"
               type="password"
-              placeholder="Min 8 chars, 1 letter + 1 digit"
+              placeholder="Create a strong password"
               value={form.password}
               onChange={handleChange}
               required
-              minLength={8}
-              className="form-input"
+              minLength={6}
+              className={styles.input}
             />
           </div>
 
-          {error && <div className="error-banner">{error}</div>}
-
-          <button
-            id="register-submit"
-            type="submit"
-            className="btn btn-primary btn-full"
-            disabled={loading}
-          >
-            {loading ? <span className="btn-spinner" /> : "Create Account"}
+          <button type="submit" disabled={loading} className={styles.submitBtn}>
+            {loading ? "Creating Account..." : "Create Account & Start Learning"}
           </button>
         </form>
 
-        <p className="auth-switch">
-          Already have an account?{" "}
-          <Link to="/login" className="auth-link">
+        <div className={styles.footer}>
+          Already have an account?
+          <Link to="/login" className={styles.footerLink}>
             Sign in
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );

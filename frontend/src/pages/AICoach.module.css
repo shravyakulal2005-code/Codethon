@@ -1,0 +1,400 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.liveBadge {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+/* ── Split Layout ───────────────────────────────────────────── */
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1.5rem;
+  min-height: 620px;
+}
+
+/* ── Left Column: Chat Conversation ─────────────────────────── */
+.chatCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+}
+
+.chatMessages {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-height: 500px;
+}
+
+.messageRow {
+  display: flex;
+  gap: 0.85rem;
+  max-width: 85%;
+}
+
+.userRow {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.aiRow {
+  align-self: flex-start;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.aiAvatar {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.userAvatar {
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
+}
+
+.bubble {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.aiBubble {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  border-top-left-radius: 4px;
+}
+
+.userBubble {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-top-right-radius: 4px;
+}
+
+/* ── Quick Action Prompt Chips (2x2 grid) ────────────────────── */
+.promptsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.promptCard {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promptCard:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* ── Chat Input Bar ─────────────────────────────────────────── */
+.inputBar {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #ffffff;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.micTriggerBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--primary);
+  transition: all var(--transition-fast);
+}
+
+.micTriggerBtn:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.micActive {
+  background-color: var(--danger-light);
+  border-color: var(--danger);
+  color: var(--danger);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.chatInput {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-page);
+  outline: none;
+  font-size: 0.92rem;
+}
+
+.chatInput:focus {
+  border-color: var(--primary);
+  background-color: #ffffff;
+}
+
+.sendBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.sendBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ── Right Column: Live Audio & Suggestions ─────────────────── */
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.audioCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 1.5rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.audioHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.audioTitle {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Sound Wave Visualizer */
+.waveformContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 36px;
+  width: 100%;
+}
+
+.waveBar {
+  width: 4px;
+  background-color: var(--primary);
+  border-radius: var(--radius-full);
+  animation: wave 1.2s ease-in-out infinite alternate;
+}
+
+.waveBar:nth-child(2) { animation-delay: 0.2s; height: 16px; }
+.waveBar:nth-child(3) { animation-delay: 0.4s; height: 26px; }
+.waveBar:nth-child(4) { animation-delay: 0.1s; height: 32px; }
+.waveBar:nth-child(5) { animation-delay: 0.3s; height: 18px; }
+.waveBar:nth-child(6) { animation-delay: 0.5s; height: 28px; }
+.waveBar:nth-child(7) { animation-delay: 0.25s; height: 14px; }
+.waveBar:nth-child(8) { animation-delay: 0.45s; height: 24px; }
+
+@keyframes wave {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+.micCircle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15), 0 8px 24px rgba(37, 99, 235, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.micCircleListening {
+  animation: pulse 1.2s infinite;
+  background-color: #fee2e2;
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.2);
+}
+
+.listeningText {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.listeningSub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.sessionToggleBtn {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.sessionToggleBtnActive {
+  background-color: var(--danger);
+}
+
+/* ── Suggestions Card ───────────────────────────────────────── */
+.suggestionsCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+.suggestionsTitle {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.85rem;
+}
+
+.suggestionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.suggestionItem {
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.82rem;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-fast);
+}
+
+.suggestionItem:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media (max-width: 960px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+  }
+}

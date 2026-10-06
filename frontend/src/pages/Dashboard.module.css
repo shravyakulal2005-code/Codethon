@@ -1,0 +1,533 @@
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.welcomeHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.greeting {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.dateBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.dateText {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.weekTag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+/* ── Top Metrics Grid ───────────────────────────────────────── */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.metricCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.metricCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.metricTitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.metricIconCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.progressRingContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progressCircle {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressValue {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.progressMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.progressTag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.progressSub {
+  font-size: 0.72rem;
+  color: var(--text-light);
+}
+
+.metricBigNumber {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.metricBigNumber span {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.metricProgressBar {
+  height: 6px;
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-full);
+  margin-top: 0.75rem;
+  overflow: hidden;
+}
+
+.metricProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: var(--radius-full);
+}
+
+.metricMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.warningBadge {
+  background-color: var(--danger-light);
+  color: var(--danger);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.chevronLink {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* ── Content Grid ───────────────────────────────────────────── */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.panelTitle {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panelLink {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.panelLink:hover {
+  text-decoration: underline;
+}
+
+/* Agenda List */
+.agendaList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.agendaItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  transition: all var(--transition-fast);
+}
+
+.agendaItem:hover {
+  border-color: #cbd5e1;
+  background-color: var(--bg-page);
+}
+
+.agendaLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.agendaDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotGreen { background-color: var(--success); }
+.dotBlue { background-color: var(--primary); }
+.dotOrange { background-color: var(--warning); }
+
+.agendaTime {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 120px;
+}
+
+.agendaDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.agendaSubject {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.agendaTopic {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.pill {
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pillSuccess {
+  background-color: var(--success-light);
+  color: var(--success);
+}
+
+.pillOngoing {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.pillUpcoming {
+  background-color: var(--bg-subtle);
+  color: var(--text-muted);
+}
+
+.sessionActionBtns {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.iconBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  border: 1px solid var(--border-color);
+  background-color: #ffffff;
+}
+
+.iconBtn:hover {
+  background-color: var(--bg-subtle);
+}
+
+.iconBtnSuccess:hover {
+  background-color: var(--success-light);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+/* Subject Progress */
+.subjectList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.subjectItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.subjectMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subjectTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.subjectIconCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.subjectName {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.subjectPercent {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.subjectBar {
+  height: 7px;
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.subjectFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+}
+
+/* Right Column Widgets */
+.rightWidgets {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.quickAccessGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.quickTile {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: all var(--transition-fast);
+}
+
+.quickTile:hover {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.quickTileIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* Streak Widget */
+.streakCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.streakHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.streakLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.streakIcon {
+  font-size: 1.4rem;
+}
+
+.streakNumber {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.streakSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.streakDays {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dayBubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.dayCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--bg-subtle);
+  color: var(--text-light);
+}
+
+.dayCircleChecked {
+  background-color: var(--primary);
+  color: white;
+}
+
+.emptyState {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}

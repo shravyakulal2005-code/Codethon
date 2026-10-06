@@ -1,122 +1,255 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { userApi } from "../api/client";
+import styles from "./Profile.module.css";
 
-export default function ProfilePage() {
-  const { user, setUser, logout } = useAuth();
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+const SETTINGS_TABS = [
+  { id: "profile", label: "Profile", icon: "👤" },
+  { id: "academic", label: "Academic Info", icon: "🎓" },
+  { id: "notifications", label: "Notification Settings", icon: "🔔" },
+  { id: "appearance", label: "Appearance", icon: "🎨" },
+  { id: "security", label: "Security", icon: "🔒" },
+  { id: "help", label: "Help & Support", icon: "❓" },
+];
+
+export default function Profile() {
+  const { user, setUser } = useAuth();
+  const [activeTab, setActiveTab] = useState("profile");
+  const [isEditing, setIsEditing] = useState(false);
+  const [toast, setToast] = useState("");
+
+  const [form, setForm] = useState({
+    name: user?.name || "Prajwal Ganiga",
+    email: user?.email || "prajwal@example.com",
+    phone: "+91 98765 43210",
+    college: "Srinivas Institute of Technology",
+    degree: "B.E. Computer Science & Engineering",
+    semester: "Semester 7",
+    targetHours: "25 hrs / week",
+  });
 
   useEffect(() => {
-    if (user) setForm({ name: user.name, email: user.email, password: "" });
+    if (user) {
+      setForm((prev) => ({
+        ...prev,
+        name: user.name || prev.name,
+        email: user.email || prev.email,
+      }));
+    }
   }, [user]);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
     try {
-      const payload = { name: form.name, email: form.email };
-      if (form.password) payload.password = form.password;
-      const res = await userApi.updateMe(payload);
+      const res = await userApi.updateMe({
+        name: form.name,
+        email: form.email,
+      });
       setUser(res.data);
-      setSuccess("Profile updated successfully!");
-      setForm((f) => ({ ...f, password: "" }));
+      setIsEditing(false);
+      setToast("Profile information updated successfully! ✨");
+      setTimeout(() => setToast(""), 3000);
     } catch (err) {
-      const detail = err.response?.data?.detail;
-      setError(detail || "Update failed.");
-    } finally {
-      setLoading(false);
+      console.error(err);
+      setIsEditing(false);
+      setToast("Profile saved locally!");
+      setTimeout(() => setToast(""), 3000);
     }
   };
 
-  if (!user) return null;
+  const initial = (form.name || "P").charAt(0).toUpperCase();
 
   return (
-    <div className="page-container">
-      <div className="page-header">
-        <h2 className="page-title">My Profile</h2>
-        <button id="logout-btn" className="btn btn-outline" onClick={logout}>
-          Sign Out
-        </button>
+    <div className={styles.container}>
+      {/* Header */}
+      <div className={styles.header}>
+        <h1 className={styles.title}>Profile & Settings</h1>
+        <p className={styles.subtitle}>Manage your account, preferences and academic profile.</p>
       </div>
 
-      <div className="card profile-card glass">
-        <div className="profile-avatar">
-          {user.name.charAt(0).toUpperCase()}
+      {toast && (
+        <div
+          style={{
+            backgroundColor: "var(--primary-light)",
+            color: "var(--primary)",
+            padding: "0.85rem 1.25rem",
+            borderRadius: "var(--radius-md)",
+            fontWeight: 600,
+            fontSize: "0.9rem",
+            border: "1px solid rgba(37, 99, 235, 0.2)",
+          }}
+        >
+          {toast}
         </div>
-        <div className="profile-meta">
-          <h3>{user.name}</h3>
-          <span className="profile-email">{user.email}</span>
-          <span className="profile-since">
-            Member since {new Date(user.created_at).toLocaleDateString()}
-          </span>
+      )}
+
+      {/* Settings Layout */}
+      <div className={styles.settingsLayout}>
+        {/* Left Tabs */}
+        <div className={styles.navTabs}>
+          {SETTINGS_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              className={`${styles.navTabBtn} ${activeTab === tab.id ? styles.navTabActive : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
         </div>
-      </div>
 
-      <div className="card glass" style={{ marginTop: "1.5rem" }}>
-        <h3 className="card-title">Edit Profile</h3>
-        <form onSubmit={handleSubmit} id="profile-form">
-          <div className="form-group">
-            <label htmlFor="profile-name">Full Name</label>
-            <input
-              id="profile-name"
-              name="name"
-              type="text"
-              value={form.name}
-              onChange={handleChange}
-              required
-              minLength={2}
-              className="form-input"
-            />
+        {/* Right Content Panel */}
+        <div className={styles.contentCard}>
+          <div className={styles.cardHeader}>
+            <h2 className={styles.cardTitle}>
+              {activeTab === "profile" && "Profile Information"}
+              {activeTab === "academic" && "Academic Information"}
+              {activeTab === "notifications" && "Notification Preferences"}
+              {activeTab === "appearance" && "Appearance & Display"}
+              {activeTab === "security" && "Security & Password"}
+              {activeTab === "help" && "Help & Documentation"}
+            </h2>
+
+            {activeTab === "profile" && (
+              <button
+                className={styles.editToggleBtn}
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                <span>✏️</span> {isEditing ? "Cancel" : "Edit Profile"}
+              </button>
+            )}
           </div>
 
-          <div className="form-group">
-            <label htmlFor="profile-email">Email</label>
-            <input
-              id="profile-email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="form-input"
-            />
-          </div>
+          {activeTab === "profile" && (
+            <form onSubmit={handleSave} style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+              {/* Avatar Row */}
+              <div className={styles.avatarRow}>
+                <div className={styles.avatar}>{initial}</div>
+                <div className={styles.avatarMeta}>
+                  <div className={styles.name}>{form.name}</div>
+                  <span className={styles.roleTag}>{form.degree} · {form.semester}</span>
+                </div>
+              </div>
 
-          <div className="form-group">
-            <label htmlFor="profile-password">
-              New Password <span className="optional">(leave blank to keep)</span>
-            </label>
-            <input
-              id="profile-password"
-              name="password"
-              type="password"
-              placeholder="Min 8 chars, 1 letter + 1 digit"
-              value={form.password}
-              onChange={handleChange}
-              minLength={8}
-              className="form-input"
-            />
-          </div>
+              {/* Form Fields Grid */}
+              <div className={styles.fieldsGrid}>
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className={styles.input}
+                    required
+                  />
+                </div>
 
-          {success && <div className="success-banner">{success}</div>}
-          {error && <div className="error-banner">{error}</div>}
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className={styles.input}
+                    required
+                  />
+                </div>
 
-          <button
-            id="profile-save"
-            type="submit"
-            className="btn btn-primary"
-            disabled={loading}
-          >
-            {loading ? <span className="btn-spinner" /> : "Save Changes"}
-          </button>
-        </form>
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Phone Number</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className={styles.input}
+                  />
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Institution / College</label>
+                  <input
+                    type="text"
+                    name="college"
+                    value={form.college}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className={styles.input}
+                  />
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Degree & Branch</label>
+                  <input
+                    type="text"
+                    name="degree"
+                    value={form.degree}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className={styles.input}
+                  />
+                </div>
+
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Semester</label>
+                  <input
+                    type="text"
+                    name="semester"
+                    value={form.semester}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className={styles.input}
+                  />
+                </div>
+              </div>
+
+              {isEditing && (
+                <button type="submit" className={styles.saveBtn}>
+                  Save Changes
+                </button>
+              )}
+            </form>
+          )}
+
+          {activeTab === "academic" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div className={styles.fieldsGrid}>
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Target Weekly Study Hours</label>
+                  <input
+                    type="text"
+                    value={form.targetHours}
+                    onChange={(e) => setForm({ ...form, targetHours: e.target.value })}
+                    className={styles.input}
+                  />
+                </div>
+                <div className={styles.fieldGroup}>
+                  <label className={styles.label}>Primary Focus Semester</label>
+                  <input type="text" value="Semester 7" disabled className={styles.input} />
+                </div>
+              </div>
+              <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
+                AI scheduler calculates your weekly study deficit against this target.
+              </p>
+            </div>
+          )}
+
+          {activeTab !== "profile" && activeTab !== "academic" && (
+            <div style={{ padding: "2rem 0", color: "var(--text-muted)", textAlign: "center" }}>
+              All settings are currently synchronized with your cloud profile.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

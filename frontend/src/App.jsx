@@ -1,95 +1,57 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MainLayout from "./components/MainLayout";
+
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
-import HomePage from "./pages/Home";
-import ProfilePage from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
+import Classrooms from "./pages/Classrooms";
+import ClassroomDetails from "./pages/ClassroomDetails";
+import SubjectDetails from "./pages/SubjectDetails";
+import Timetable from "./pages/Timetable";
+import Availability from "./pages/Availability";
+import NotesRag from "./pages/NotesRag";
+import Quizzes from "./pages/Quizzes";
+import AICoach from "./pages/AICoach";
+import Analytics from "./pages/Analytics";
+import Profile from "./pages/Profile";
 
 export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public routes */}
+          {/* Public Auth Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* Protected routes */}
+          {/* Protected App Routes with Unified MainLayout */}
           <Route
-            path="/"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <MainLayout />
               </ProtectedRoute>
             }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
+          >
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/classrooms" element={<Classrooms />} />
+            <Route path="/classrooms/:id" element={<ClassroomDetails />} />
+            <Route path="/subjects/:id" element={<SubjectDetails />} />
+            <Route path="/timetable" element={<Timetable />} />
+            <Route path="/availability" element={<Availability />} />
+            <Route path="/notes-rag" element={<NotesRag />} />
+            <Route path="/quizzes" element={<Quizzes />} />
+            <Route path="/ai-coach" element={<AICoach />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
 
-          {/* Placeholder routes for future steps */}
-          <Route
-            path="/classrooms"
-            element={
-              <ProtectedRoute>
-                <ComingSoon title="Classrooms & Subjects" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/planner"
-            element={
-              <ProtectedRoute>
-                <ComingSoon title="Study Planner" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/exams"
-            element={
-              <ProtectedRoute>
-                <ComingSoon title="Exams & Assignments" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <ComingSoon title="Analytics Dashboard" />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chat"
-            element={
-              <ProtectedRoute>
-                <ComingSoon title="AI Chat Tutor" />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-  );
-}
-
-function ComingSoon({ title }) {
-  return (
-    <div className="page-container">
-      <div className="coming-soon glass">
-        <span className="coming-soon-icon">🚧</span>
-        <h2>{title}</h2>
-        <p>This feature is coming in the next step.</p>
-      </div>
-    </div>
   );
 }
