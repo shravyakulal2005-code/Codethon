@@ -6,7 +6,24 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
 from app.database import Base, engine
-from app.routers import auth, users
+import app.models  # Register all models on Base.metadata
+from app.routers import (
+    auth,
+    users,
+    classrooms,
+    subjects,
+    topics,
+    exams,
+    assignments,
+    availability,
+    study_plan,
+    notes,
+    rag,
+    quizzes,
+    dashboard,
+    analytics,
+    ai,
+)
 
 settings = get_settings()
 
@@ -37,6 +54,19 @@ app.add_middleware(
 # ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(classrooms.router)
+app.include_router(subjects.router)
+app.include_router(topics.router)
+app.include_router(exams.router)
+app.include_router(assignments.router)
+app.include_router(availability.router)
+app.include_router(study_plan.router)
+app.include_router(notes.router)
+app.include_router(rag.router)
+app.include_router(quizzes.router)
+app.include_router(dashboard.router)
+app.include_router(analytics.router)
+app.include_router(ai.router)
 
 
 @app.get("/health", tags=["health"])

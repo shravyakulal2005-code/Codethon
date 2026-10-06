@@ -12,8 +12,13 @@ os.environ["SECRET_KEY"] = "pytest-secret"
 
 from app.main import app
 from app.database import Base, get_db
+from sqlalchemy.pool import StaticPool
 
-TEST_ENGINE = create_engine("sqlite://", connect_args={"check_same_thread": False})
+TEST_ENGINE = create_engine(
+    "sqlite://",
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
+)
 TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=TEST_ENGINE)
 
 

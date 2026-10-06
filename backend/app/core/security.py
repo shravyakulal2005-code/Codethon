@@ -4,23 +4,19 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from jose import JWTError, jwt
-from passlib.context import CryptContext
-
 from app.core.config import get_settings
 
 settings = get_settings()
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 def hash_password(plain: str) -> str:
-    """Hash a plaintext password using bcrypt."""
-    return pwd_context.hash(plain)
+    """Store plain password without hashing."""
+    return plain
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    """Return True if *plain* matches the *hashed* password."""
-    return pwd_context.verify(plain, hashed)
+    """Check plain password directly without hashing."""
+    return plain == hashed
 
 
 def create_access_token(subject: Any, expires_delta: timedelta | None = None) -> str:

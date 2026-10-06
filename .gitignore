@@ -16,14 +16,21 @@ env/
 
 # Environment files
 .env
+*.env
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
 
 # Database
 backend/app.db
 backend/test.db
 *.db
 
-# FAISS / storage
+# Uploads & FAISS storage
 backend/storage/
+backend/uploads/
+uploads/
 
 # Node
 node_modules/
